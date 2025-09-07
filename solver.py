@@ -3,7 +3,7 @@ import naive
 
 def find_groups(data):
     result = []
-    for _key, group in groupby(enumerate(data), lambda (i, x): i - x):
+    for _key, group in groupby(enumerate(data), lambda i, x: i - x):
         result.append([x[1] for x in group])
     return result
 
@@ -11,8 +11,8 @@ def empty_neighbors(width, height, grid, index):
     result = set()
     x = index % width
     y = index / width
-    for dy in xrange(-1, 2):
-        for dx in xrange(-1, 2):
+    for dy in range(-1, 2):
+        for dx in range(-1, 2):
             nx = x + dx
             ny = y + dy
             if nx == x and ny == y:
@@ -85,14 +85,14 @@ def solve(width, height, grid):
     raise Exception('Multiple solutions exist.')
 
 def display(width, height, grid):
-    for y in xrange(height):
-        print ''.join(['+'] + ['--+' for _ in xrange(width)])
+    for y in range(height):
+        print(''.join(['+'] + ['--+' for _ in range(width)]))
         row = ['|']
-        for x in xrange(width):
+        for x in range(width):
             i = y * width + x
             row.append('%2d|' % grid[i])
-        print ''.join(row)
-    print ''.join(['+'] + ['--+' for _ in xrange(width)])
+        print(''.join(row))
+    print(''.join(['+'] + ['--+' for _ in range(width)]))
 
 def main():
     #grid = [36, 0, 0, 0, 14, 0, 4, 3, 34, 10, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 18, 0, 30, 0, 0, 7, 20, 0, 0, 29, 26, 0, 23, 22]

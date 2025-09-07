@@ -4,7 +4,7 @@ import naive
 import random
 import solver
 
-class Model(object):
+class Model:
     def __init__(self, width, height, grid, shown=None):
         self.width = width
         self.height = height
@@ -42,7 +42,7 @@ def generate_puzzle(width, height, grid):
         result.shown = list(state.shown)
         return result
     def listener(state, energy):
-        print energy
+        print(energy)
         display(width, height, state.get_grid())
     state = Model(width, height, grid)
     annealer = anneal.Annealer(energy, do_move, undo_move, make_copy)
@@ -51,15 +51,15 @@ def generate_puzzle(width, height, grid):
     return state.get_grid()
 
 def display(width, height, grid):
-    for y in xrange(height):
-        print ''.join(['+'] + ['--+' for _ in xrange(width)])
+    for y in range(height):
+        print(''.join(['+'] + ['--+' for _ in range(width)]))
         row = ['|']
-        for x in xrange(width):
+        for x in range(width):
             i = y * width + x
             row.append('%2d|' % grid[i] if grid[i] else '  |')
-        print ''.join(row)
-    print ''.join(['+'] + ['--+' for _ in xrange(width)])
-    print
+        print(''.join(row))
+    print(''.join(['+'] + ['--+' for _ in range(width)]))
+    print()
 
 def main():
     width = height = 6

@@ -2,7 +2,7 @@ from itertools import groupby
 
 def find_ranges(data):
     result = []
-    for _key, group in groupby(enumerate(data), lambda (i, x): i - x):
+    for _key, group in groupby(enumerate(data), lambda i, x: i - x):
         result.append([x[1] for x in group])
     return result
 
@@ -14,8 +14,8 @@ def _find_paths(width, height, grid, index, target, length, path, seen):
             yield path[1:-1]
     else:
         x, y = index % width, index / width
-        for dy in xrange(-1, 2):
-            for dx in xrange(-1, 2):
+        for dy in range(-1, 2):
+            for dx in range(-1, 2):
                 if dx == 0 and dy == 0:
                     continue
                 nx, ny = x + dx, y + dy
@@ -36,13 +36,13 @@ def _find_paths(width, height, grid, index, target, length, path, seen):
 def search(width, height, grid, index, target):
     n1, n2 = grid[index], grid[target]
     length = n2 - n1 + 1
-    all_choices = [set() for _ in xrange(length - 2)]
+    all_choices = [set() for _ in range(length - 2)]
     for result in _find_paths(width, height, grid, index, target, length, [], set()):
         for index, value in enumerate(result):
             all_choices[index].add(value)
         if all(len(x) > 1 for x in all_choices):
             return False
-    for index, number in enumerate(xrange(n1 + 1, n2)):
+    for index, number in enumerate(range(n1 + 1, n2)):
         choices = all_choices[index]
         if len(choices) == 1:
             choice = choices.pop()
@@ -68,14 +68,14 @@ def solve(width, height, grid):
     return grid
 
 def display(width, height, numbers):
-    for y in xrange(height):
-        print ''.join(['+'] + ['--+' for _ in xrange(width)])
+    for y in range(height):
+        print(''.join(['+'] + ['--+' for _ in range(width)]))
         row = ['|']
-        for x in xrange(width):
+        for x in range(width):
             i = y * width + x
             row.append('%2d|' % numbers[i])
-        print ''.join(row)
-    print ''.join(['+'] + ['--+' for _ in xrange(width)])
+        print(''.join(row))
+    print(''.join(['+'] + ['--+' for _ in range(width)]))
 
 def main():
     grid = [36, 0, 0, 0, 14, 0, 4, 3, 34, 10, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 18, 0, 30, 0, 0, 7, 20, 0, 0, 29, 26, 0, 23, 22]

@@ -3,12 +3,12 @@ import random
 
 def compute_neighbors(width, height):
     neighbors = {}
-    for y in xrange(height):
-        for x in xrange(width):
+    for y in range(height):
+        for x in range(width):
             i = y * width + x
             neighbors[i] = []
-            for dy in xrange(-1, 2):
-                for dx in xrange(-1, 2):
+            for dy in range(-1, 2):
+                for dx in range(-1, 2):
                     nx, ny = x + dx, y + dy
                     if nx == x and ny == y:
                         continue
@@ -37,7 +37,7 @@ class Model(object):
     def reset(self):
         self.end = random.randint(0, self.size - 1)
         self.next = [-1] * self.size
-        for i in xrange(self.size):
+        for i in range(self.size):
             if i == self.end:
                 continue
             self.next[i] = random_neighbor(self.width, self.height, i)
@@ -51,14 +51,15 @@ class Model(object):
             result = (i, self.next[i])
             self.next[i] = random_neighbor(self.width, self.height, i)
             return result
-    def undo_move(self, (index, value)):
+    def undo_move(self, h):
+        index, value = h
         self.next[index] = value
     def get_grid(self):
         result = [-1] * self.size
-        lookup = dict((self.next[i], i) for i in xrange(self.size))
+        lookup = dict((self.next[i], i) for i in range(self.size))
         index = self.end
         number = self.size
-        for _ in xrange(self.size):
+        for _ in range(self.size):
             result[index] = number
             number -= 1
             if index not in lookup:
@@ -86,14 +87,14 @@ def generate_puzzle(width, height):
     return state.get_grid()
 
 def display(width, height, grid):
-    for y in xrange(height):
-        print ''.join(['+'] + ['--+' for _ in xrange(width)])
+    for y in range(height):
+        print(''.join(['+'] + ['--+' for _ in range(width)]))
         row = ['|']
-        for x in xrange(width):
+        for x in range(width):
             i = y * width + x
             row.append('%2d|' % grid[i])
-        print ''.join(row)
-    print ''.join(['+'] + ['--+' for _ in xrange(width)])
+        print(''.join(row))
+    print(''.join(['+'] + ['--+' for _ in range(width)]))
 
 def main():
     width = height = 8
